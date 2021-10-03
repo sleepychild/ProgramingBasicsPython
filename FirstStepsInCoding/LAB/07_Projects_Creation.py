@@ -1,4 +1,3 @@
-#!../venv/bin/python
 name = input()
 projects = int(input())
 time = projects * 3

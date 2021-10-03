@@ -1,4 +1,3 @@
-#!../venv/bin/python
 price = float(input()) * 7.61
 discount = price * 0.18
 final = price - discount
