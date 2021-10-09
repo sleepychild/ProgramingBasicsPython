@@ -1,0 +1,5 @@
+arr: list = list()
+for i in range(int(input())): arr.append(int(input()))
+arr.sort()
+print(f'Max number: {arr[-1]}')
+print(f'Min number: {arr[0]}')
