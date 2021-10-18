@@ -6,7 +6,6 @@ failed: int = 0
 
 while True:
     grade = float(input())
-    grades.append(grade)
     if grade < 4:
         failed += 1
         if failed > 1:
@@ -15,6 +14,7 @@ while True:
     else:
         failed = 0
         year += 1
+        grades.append(grade)
         if year > 12:
             print(f'{student_name} graduated. Average grade: {sum(grades) / len(grades):.2f}')
             exit(0)
