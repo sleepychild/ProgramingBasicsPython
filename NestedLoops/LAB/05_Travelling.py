@@ -6,6 +6,6 @@ while True:
     if destination == 'End':
         exit(0)
     cost = float(input())
-    while cost >= 0:
+    while cost > 0:
         cost -= float(input())
     print(f'Going to {destination}!')
