@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 10vw;
+}
+
+img {
+    display: inline-block;
+    width: 20vw;
+}
