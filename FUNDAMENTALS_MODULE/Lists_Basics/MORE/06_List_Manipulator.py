@@ -1,17 +1,18 @@
-from typing import List
+from typing import List, Callable
 
-input_data: str = '1 3 5 7 9'
-cmds: List[str] = [
-    'exchange 1',
-    'max odd',
-    'min even',
-    'first 2 odd',
-    'last 2 even',
-    'exchange 3',
-    'end',
-]
+# input_data: str = '1 3 5 7 9'
+input_data: str = '1 10 100 1000'
 
-# input_data: str = '1 10 100 1000'
+# cmds: List[str] = [
+#     'exchange 1',
+#     'max odd',
+#     'min even',
+#     'first 2 odd',
+#     'last 2 even',
+#     'exchange 3',
+#     'end',
+# ]
+
 # cmds: List[str] = [
 #     'max even',
 #     'first 5 even',
@@ -23,11 +24,35 @@ cmds: List[str] = [
 #     'end',
 # ]
 
-# input_data: str = '1 10 100 1000'
+cmds: List[str] = [
+    'exchange 3',
+    'first 2 odd',
+    'last 4 odd',
+    'end',
+]
+
+# input_data: str = '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 100 200 500 1000 1001 2000 2001'
+
 # cmds: List[str] = [
-#     'exchange 3',
-#     'first 2 odd',
-#     'last 4 odd',
+#     'max even',
+#     'max odd',
+#     'min even',
+#     'min odd',
+#     'first 5 even',
+#     'first 5 odd',
+#     'last 5 even',
+#     'last 5 odd',
+#     'exchange 10',
+#     'max even',
+#     'max odd',
+#     'min even',
+#     'min odd',
+#     'first 5 even',
+#     'first 5 odd',
+#     'last 5 even',
+#     'last 5 odd',
+#     'exchange 40',
+#     'first 40 even',
 #     'end',
 # ]
 
@@ -52,8 +77,9 @@ class InteractiveList(list):
         except InvalidIndex as e:
             print(e)
         else:
-            for _ in range(index):
+            for _ in range(index+1):
                 self.append(self.pop(0))
+        # print(self)
 
     def max(self, *args) -> None:
         try:
@@ -83,7 +109,7 @@ class InteractiveList(list):
         print(self)
         exit()
 
-    def _max_min_even_odd(self, mode, num_type) -> int:
+    def _max_min_even_odd(self, mode: Callable[..., int], num_type: Callable[[int], bool]) -> int:
         try:
             t_val: int = mode(filter(num_type, self))
         except ValueError as _:
@@ -91,9 +117,11 @@ class InteractiveList(list):
         else:
             return self.index(t_val)
 
-    def _first_last_even_odd(self, mode: int, num_type, count: int) -> List:
-        self._count_check(count)
-
+    def _first_last_even_odd(self, mode: int, num_type: Callable[[int], bool], count: int) -> List:
+        if count > len(self) :
+            raise InvalidCount
+        else:
+            return list(filter(num_type, self))[::mode][:count]
 
     def _even(self, n: int) -> bool:
         return (n % 2) == 0
@@ -102,12 +130,8 @@ class InteractiveList(list):
         return (n % 2) != 0
 
     def _index_check(self, index: int) -> None:
-        if not index in range(0, len(self)) :
+        if not 0 <= index < len(self):
             raise InvalidIndex
-
-    def _count_check(self, count: int) -> None:
-        if count > len(self) :
-            raise InvalidCount
 
     @classmethod
     def list_from_string(cls, str_in: str, str_delimiter: str, element_type: type) -> 'InteractiveList':
@@ -118,6 +142,12 @@ print(interlist)
 
 for command in cmds:
     command_parts: List[str] = command.split(' ')
-    print(command_parts)
+    print(command_parts, end=" => ")
     interlist.__getattribute__(command_parts[0])(*command_parts[1:])
     print(interlist)
+
+# if __name__ == '__main__':
+#     interlist: InteractiveList = InteractiveList.list_from_string(input(), ' ', int)
+#     while True:
+#         cmd_prt: List[str] = input().split(' ')
+#         interlist.__getattribute__(cmd_prt[0])(*cmd_prt[1:])
