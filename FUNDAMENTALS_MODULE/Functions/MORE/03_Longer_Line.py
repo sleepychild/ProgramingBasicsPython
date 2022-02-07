@@ -6,7 +6,7 @@ class Point:
         self.x: float = x
         self.y: float = y
 
-    def distance_to(self, p: 'Point') -> None:
+    def distance_to(self, p: 'Point') -> float:
         return sqrt((self.x - p.x)**2 + (self.y - p.y)**2)
 
     def __str__(self) -> str:
