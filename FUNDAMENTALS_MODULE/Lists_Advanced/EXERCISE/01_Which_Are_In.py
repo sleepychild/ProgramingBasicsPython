@@ -1,16 +1,13 @@
-from typing import List, Tuple
+from typing import Callable, List
 
-subs: Tuple[str] = (
-    'arp, live, strong',
-    'tarp, mice, bull',
-)
+def make_filter_function(haystack: List[str]):
+    def fltr_fnc(needle:str):
+        for hay in haystack:
+            if needle in hay:
+                return True
+        return False
+    return fltr_fnc
 
-strs: Tuple[str] = (
-    'lively, alive, harp, sharp, armstrong',
-    'lively, alive, harp, sharp, armstrong',
-)
-
-for i in range(len(subs)):
-    print(subs[i], ' in ', strs[i])
-    subs_list: List[str] = subs[i].split(', ')
-    strs_list: List[str] = strs[i].split(', ')
+subs_list: List[str] = input().split(', ')
+filter_function: Callable[[str], bool] = make_filter_function(input().split(', '))
+print(list(filter(filter_function, subs_list)))
