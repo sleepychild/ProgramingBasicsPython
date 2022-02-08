@@ -1,0 +1,1 @@
+[ print(z) for z in list(filter(lambda y: len(y) % 2 == 0, input().split())) ]
