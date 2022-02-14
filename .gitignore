@@ -133,3 +133,5 @@ dmypy.json
 
 # Mac os Gadbage
 .DS_Store
+
+result
