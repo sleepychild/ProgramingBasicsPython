@@ -1,7 +1,7 @@
 from typing import List, Tuple, Generator, Callable, Union
 from enum import Enum
 
-DEBUG: bool = True
+DEBUG: bool = False
 
 TEST_RUNS: Tuple[Tuple[str]] = (
     (
@@ -189,6 +189,11 @@ class ControlClass:
 def solution():
     ctrl: ControlClass = ControlClass()
     ctrl.run()
+    try:
+        print(max([ len(t.path) for t in ctrl.traversals.list ]))
+    except ValueError as _:
+        print(0)
+
 
 if DEBUG:
     for test_run in TEST_RUNS:
