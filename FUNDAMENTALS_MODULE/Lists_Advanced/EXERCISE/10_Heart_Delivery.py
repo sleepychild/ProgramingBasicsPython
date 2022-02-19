@@ -1,5 +1,7 @@
 from typing import Generator, List, Tuple, Callable
 
+DEBUG: bool = False
+
 test_runs: Tuple[Tuple[str]] = (
     (
         '10@10@10@2',
@@ -70,7 +72,11 @@ class NeighborhoodClass:
             return house
 
     def result(self) -> None:
-        print(f"Cupid has failed { len(list(filter(lambda h: not h.had_valentine, self.houses_list))) } places.")
+        failed_houses: int = len(list(filter(lambda h: not h.had_valentine, self.houses_list)))
+        if failed_houses == 0:
+            print('Mission was successful.')
+        else:
+            print(f"Cupid has failed { failed_houses } places.")
 
     def __str__(self) -> str:
         return ' @ '.join(list(map(str,self.houses_list)))
@@ -103,8 +109,9 @@ def solution():
     neighborhood: NeighborhoodClass = NeighborhoodClass.FromString(input())
     CupidClass(neighborhood).run()
 
-solution()
-
-# for test_run in test_runs:
-#     input: Callable[[], str] = get_run_generator(test_run)
-#     solution()
+if DEBUG:
+    for test_run in test_runs:
+        input: Callable[[], str] = get_run_generator(test_run)
+        solution()
+else:
+    solution()

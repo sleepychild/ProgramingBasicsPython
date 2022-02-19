@@ -1,7 +1,7 @@
 from typing import List, Tuple, Generator, Callable, Union
 from enum import Enum
 
-DEBUG: bool = True
+DEBUG: bool = False
 
 TEST_RUNS: Tuple[Tuple[str]] = (
     (
@@ -43,21 +43,72 @@ class Directions(Enum):
     DOWN: Tuple[int] = (1, 0,)
     LEFT: Tuple[int] = (0, -1,)
 
-
 class ShootingRangeClass:
 
-    
+    def __init__(self, targets: List[int]) -> None:
+        self.targets: List[int] = targets
+
+    def shoot(self, index: int, power: int) -> None:
+        if self._validate_index(index):
+            self.targets[index] -= power
+            if DEBUG: print(f'Post Shoot: {self}')
+            if self.targets[index] <= 0:
+                _: int = self.targets.pop(index)
+                if DEBUG: print(f'Post Clear: {self}')
+
+    def add(self, index: int, value: int) -> None:
+        if self._validate_index(index):
+            self.targets.insert(index, value)
+            if DEBUG: print(f'Post Add: {self}')
+        else:
+            print('Invalid placement!')
+
+    def strike(self, index: int, radius: int) -> None:
+        if self._validate_index(index) and self._validate_index(index-radius) and self._validate_index(index+radius):
+            for _ in range(index-radius,index+radius+1):
+                self.targets.pop(index-radius)
+                if DEBUG: print(f'Post Strike: {self}')
+        else:
+            print('Strike missed!')
+
+    def _validate_index(self, index: int) -> bool:
+        return index in range(len(self.targets))
+
+    def __str__(self) -> str:
+        return '|'.join([str(n) for n in self.targets])
 
     @classmethod
-    def FromInput(cls) -> 'Base':
-        print(input())
-        return cls()
-
+    def FromInput(cls) -> 'ShootingRangeClass':
+        return cls([ int(n) for n in input().split(' ') ])
 
 class ControlClass:
 
+    def __init__(self) -> None:
+        self.sr: ShootingRangeClass = ShootingRangeClass.FromInput()
+
     def run(self) -> None:
-        pass
+        if DEBUG: print(f'\nSTART RUN: {self.sr}')
+
+        while True:
+            cmd: str = input()
+
+            if cmd == 'End':
+                print(self.sr)
+                return
+
+            c_act, c_ind, c_arg = [ int(p) if p.isnumeric() else p for p in cmd.split(' ') ]
+
+            if DEBUG: print(c_act, c_ind, c_arg)
+            
+            if c_act == 'Shoot':
+                self.sr.shoot(c_ind, c_arg)
+            elif c_act == 'Add':
+                self.sr.add(c_ind, c_arg)
+            elif c_act == 'Strike':
+                self.sr.strike(c_ind, c_arg)
+            else:
+                print(self.sr)
+                return
 
 
 def solution():
