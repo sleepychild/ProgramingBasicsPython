@@ -1,0 +1,1 @@
+for s in input().split():print(s*len(s),end='')
