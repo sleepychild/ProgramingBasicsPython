@@ -1,9 +1,10 @@
 from typing import Deque, Tuple, Generator, Callable
 from collections import deque
 
-DEBUG: bool = True
+DEBUG: bool = False
 
 TEST_RUNS: Tuple[Tuple[str]] = (
+    ("0",),
     (
         "4",
         "1 10",
@@ -60,9 +61,15 @@ def solution():
             except IndexError as _:
                 pass
         elif lin.startswith("3"):
-            print(max(dq))
+            try:
+                print(max(dq))
+            except ValueError as _:
+                pass
         elif lin.startswith("4"):
-            print(min(dq))
+            try:
+                print(min(dq))
+            except ValueError as _:
+                pass
     dq.reverse()
     print(", ".join(list(map(lambda e: str(e), dq))))
 

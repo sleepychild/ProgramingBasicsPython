@@ -4,8 +4,14 @@ from collections import deque
 DEBUG: bool = False
 
 TEST_RUNS: Tuple[Tuple[str]] = (
-    ("1 2 3 4 5",),
-    ("1",),
+    (
+        "5 4 8 6 3 8 7 7 9",
+        "16",
+    ),
+    (
+        "1 7 8 2 5 4 7 8 9 6 3 2 5 4 6",
+        "20",
+    ),
 )
 
 
@@ -19,9 +25,20 @@ def get_run_generator(test_data: Tuple[str]) -> Callable[[], str]:
 
 
 def solution():
-    dq: Deque = deque([int(e) for e in input().split()])
-    dq.reverse()
-    print(*dq)
+    clothes: Deque = deque([int(c) for c in input().split()])
+    rack_capacity: int = int(input())
+    racks_count: int = int()
+
+    while clothes:
+        acc: int = int()
+        while acc <= rack_capacity:
+            if clothes and acc + clothes[-1] <= rack_capacity:
+                acc += clothes.pop()
+            else:
+                racks_count += 1
+                break
+
+    print(racks_count)
 
 
 if DEBUG:
