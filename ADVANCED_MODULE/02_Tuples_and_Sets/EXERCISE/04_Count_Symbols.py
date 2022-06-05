@@ -1,22 +1,11 @@
-from typing import Generator, Callable, Tuple, Set
+from typing import Generator, Callable, Tuple, Set, List
 
 
 DEBUG: bool = False
 
 TEST_RUNS: Tuple[Tuple[str]] = (
-    (
-        "4",
-        "Ce O",
-        "Mo O Ce",
-        "Ee",
-        "Mo",
-    ),
-    (
-        "3",
-        "Ge Ch O Ne",
-        "Nb Mo Tc",
-        "O Ne",
-    ),
+    ("SoftUni rocks",),
+    ("Why do you like Python?",),
 )
 
 
@@ -30,11 +19,17 @@ def get_run_generator(test_data: Tuple[str]) -> Callable[[], str]:
 
 
 def solution() -> None:
-    elements: Set[str] = set()
-    for _ in range(int(input())):
-        for e in input().split():
-            elements.add(e)
-    tuple(map(print, elements))
+    line_in: str = input()
+    line_list: List[str] = list(line_in)
+    line_set: Set[str] = set(line_in)
+
+    if DEBUG:
+        print(line_in)
+        print(line_list)
+        print(sorted(line_set))
+
+    for e in sorted(line_set):
+        print(f"{e}: {line_list.count(e)} time/s")
 
 
 if DEBUG:
