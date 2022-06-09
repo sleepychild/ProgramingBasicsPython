@@ -44,3 +44,17 @@ python numbers_dictionary --solution first --inputs numbers_dictionary.json
 python numbers_dictionary --solution second --inputs numbers_dictionary.json
 ```
 This is what hapens if the homework is fucking boring.
+
+## Email Validator
+
+This one is more boring. No modules and no fancy cli test whatever. Just run...
+```bash
+python Email_Validator.py
+```
+and enter some emails to see the exceptions.
+
+Alt...
+```bash
+python Email_Validator_Test.py
+```
+will run the inputs from the exercise docx for lazy people.
