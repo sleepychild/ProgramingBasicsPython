@@ -18,7 +18,7 @@ class InvalidDomainError(Exception):
 
 
 email_regex_string: str = (
-    r"^(?P<User>[\w\d\_\-\.]+)(?P<AtSign>@?)(?P<Hostname>\w+)(?P<Domain>\.\w+)"
+    r"^(?P<User>[\w\d\_\-\.]+)(?P<AtSign>@?)(?P<Hostname>\w+)(?P<Domain>\.\w+)$"
 )
 
 email_regex = re.compile(email_regex_string, flags=re.IGNORECASE)
