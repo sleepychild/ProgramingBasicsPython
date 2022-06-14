@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Generator, Callable, Tuple, Deque
 
-DEBUG: bool = True
+DEBUG: bool = False
 
 TEST_RUNS: Tuple[Tuple[str]] = (
     (
@@ -15,9 +15,14 @@ TEST_RUNS: Tuple[Tuple[str]] = (
         "* + + * -",
     ),
     (
-        "1 1 1 1",
+        "0 0 0 0",
         "1 1 1 1",
         "+ - * / + - * / + - * /",
+    ),
+    (
+        "-1 -1 -1 -1",
+        "0 0 0 0",
+        "/ / / /",
     ),
 )
 
@@ -36,7 +41,7 @@ def solution() -> None:
     nectars: Deque[int] = deque(map(int, input().split()))
     ops: Deque[str] = deque(input().split())
 
-    honey_made: float = float()
+    honey_made: int = int()
 
     if DEBUG:
         print(bees, nectars, ops)
@@ -48,19 +53,25 @@ def solution() -> None:
             ops,
         )
     ):
-        if bees[0] <= nectars[-1]:
+        if not bees[0] > nectars[-1]:
             evaluation: str = f"{bees.popleft()} {ops.popleft()} {nectars.pop()}"
-            evaluation_result: float = eval(evaluation)
-            if DEBUG:
-                print(f"{evaluation} = {evaluation_result}")
-            honey_made += abs(evaluation_result)
+            try:
+                evaluation_result: int = eval(evaluation)
+            except ZeroDivisionError as e:
+                if DEBUG:
+                    print(e, evaluation)
+            else:
+                honey_made += abs(evaluation_result)
+                if DEBUG:
+                    print(f"{evaluation} = {evaluation_result}")
+
         else:
             nectars.pop()
 
         if DEBUG:
             print(bees, nectars, ops)
 
-    print(f"Total honey made: {honey_made:.0f}")
+    print(f"Total honey made: {honey_made}")
     if bees:
         print("Bees left:", ", ".join(map(str, bees)))
     if nectars:
