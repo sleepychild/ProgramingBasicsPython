@@ -1,10 +1,11 @@
-from typing import Generator, Callable, Tuple
+from typing import Generator, Callable, Tuple, List
 
-DEBUG: bool = True
+DEBUG: bool = False
 
 TEST_RUNS: Tuple[Tuple[str]] = (
-    (),
-    (),
+    ("1 2 3 |4 5 6 | 7 88",),
+    ("7 | 4 5|1 0| 2 5 |3",),
+    ("1| 4 5 6 7 | 8 9",),
 )
 
 
@@ -18,7 +19,10 @@ def get_run_generator(test_data: Tuple[str]) -> Callable[[], str]:
 
 
 def solution() -> None:
-    pass
+    sub_matrixes: List[List[str]] = list()
+    for sub_matrix in [sm.split() for sm in input().split("|")[::-1]]:
+        sub_matrixes.extend(sub_matrix)
+    print(" ".join(sub_matrixes))
 
 
 if DEBUG:
